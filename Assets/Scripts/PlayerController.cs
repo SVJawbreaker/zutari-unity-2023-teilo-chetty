@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
+using UnityEngine.UI;
+using Slider = UnityEngine.UI.Slider;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Material leftMaterial;
 
     private Rigidbody rb;
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float defSpeed = 10f;
+    [SerializeField] private Slider slider;
+    [SerializeField] private Text text;
 
     void Start()
     {
@@ -27,6 +33,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         playerInput();
+
+        //Update the UI to show slider %age
+        text.text = Convert.ToString(slider.value * 100f) + "%";
     }
 
     private void playerInput()
@@ -35,11 +44,23 @@ public class PlayerController : MonoBehaviour
         Vector3 pInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
         //Updates the player's position
-        rb.MovePosition(transform.position + pInput * Time.deltaTime * speed);
+        rb.MovePosition(transform.position + pInput * Time.deltaTime * (defSpeed * slider.value));
 
         materialSwitch();
+
+        //Change slider value
+        if (Input.GetKeyDown(KeyCode.Equals)) //increase
+        {
+            slider.value += 0.1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Minus)) //decrease
+        {
+            slider.value -= 0.1f;
+        }
     }
 
+    //change material of player object based in input values
     private void materialSwitch()
     {
         //reset material
@@ -51,7 +72,7 @@ public class PlayerController : MonoBehaviour
         {
             mr.material = rightMaterial;
 
-            //moved out of view
+            //Respawn - moved out of view
             if (transform.position.x > 11f)
                 transform.position = new Vector3(-11f, 0.5f, transform.position.z);
         }
@@ -61,7 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             mr.material = leftMaterial;
 
-            //moved out of view
+            //Respawn - moved out of view
             if (transform.position.x < -11f)
                 transform.position = new Vector3(11f, 0.5f, transform.position.z);
         }
@@ -71,7 +92,7 @@ public class PlayerController : MonoBehaviour
         {
             mr.material = upMaterial;
 
-            //moved out of view
+            //Respawn - moved out of view
             if (transform.position.z > 6f)
                 transform.position = new Vector3(transform.position.x, 0.5f, -6f);
         }
@@ -81,7 +102,7 @@ public class PlayerController : MonoBehaviour
         {
             mr.material = downMaterial;
 
-            //moved out of view
+            //Reset - moved out of view
             if (transform.position.z < -6f)
                 transform.position = new Vector3(transform.position.x, 0.5f, 6f);
         }
