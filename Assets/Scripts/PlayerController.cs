@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Material leftMaterial;
 
     private Rigidbody rb;
-    private float speed = 10f;
+    [SerializeField] private float speed = 10f;
 
     void Start()
     {
@@ -48,18 +48,42 @@ public class PlayerController : MonoBehaviour
 
         //Right
         if (Input.GetAxis("Horizontal") > 0)
+        {
             mr.material = rightMaterial;
+
+            //moved out of view
+            if (transform.position.x > 11f)
+                transform.position = new Vector3(-11f, 0.5f, transform.position.z);
+        }
 
         //Left
         if (Input.GetAxis("Horizontal") < 0)
+        {
             mr.material = leftMaterial;
+
+            //moved out of view
+            if (transform.position.x < -11f)
+                transform.position = new Vector3(11f, 0.5f, transform.position.z);
+        }
 
         //Up
         if (Input.GetAxis("Vertical") > 0)
+        {
             mr.material = upMaterial;
+
+            //moved out of view
+            if (transform.position.z > 6f)
+                transform.position = new Vector3(transform.position.x, 0.5f, -6f);
+        }
 
         //Down
         if (Input.GetAxis("Vertical") < 0)
+        {
             mr.material = downMaterial;
+
+            //moved out of view
+            if (transform.position.z < -6f)
+                transform.position = new Vector3(transform.position.x, 0.5f, 6f);
+        }
     }
 }
