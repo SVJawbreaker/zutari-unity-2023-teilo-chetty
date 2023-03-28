@@ -432,6 +432,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b25b98d183eadf46b71efd3a9b63fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defMaterial: {fileID: 2100000, guid: f664b39ce4c072047bb58de01338a7ca, type: 2}
+  upMaterial: {fileID: 2100000, guid: 84504e8721b6ffd43bddd6ddacd35fff, type: 2}
+  rightMaterial: {fileID: 2100000, guid: af35b96e224aa884e8e023ce0f4237e4, type: 2}
+  downMaterial: {fileID: 2100000, guid: 01876726746e08f419c26455bbfa4028, type: 2}
+  leftMaterial: {fileID: 2100000, guid: 81b985dd5b703724dae415697f6263c5, type: 2}
 --- !u!1 &1879122837
 GameObject:
   m_ObjectHideFlags: 0
