@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         playerInput();
 
         //Update the UI to show slider %age
-        text.text = Convert.ToString(slider.value * 100f) + "%";
+        text.text = (slider.value * 100f).ToString("F0") + "%";
     }
 
     private void playerInput()
